@@ -5,7 +5,7 @@ namespace DeepSigma.AudioVideoUtilities.Utilities;
 /// <summary>
 /// YtDlp Video Downloader. Uses yt-dlp to download videos with cookies support.
 /// </summary>
-public class YtDlpVideoDownloader
+internal class YtDlpVideoDownloader
 {
     /// <summary>
     /// Downloads a video using yt-dlp with the specified cookies file and output path.
@@ -22,7 +22,7 @@ public class YtDlpVideoDownloader
     /// <param name="outputPath"></param>
     /// <param name="cancelToken"></param>
     /// <returns></returns>
-    public static async Task<(bool, Exception?)> DownloadVideoAsync(string Url, string cookies_txt_path, string outputPath, CancellationToken cancelToken = default)
+    internal static async Task<(bool, Exception?)> DownloadVideoAsync(string Url, string cookies_txt_path, string outputPath, CancellationToken cancelToken = default)
     {
         string exePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "tools", "yt-dlp.exe");
         string args = $"--cookies \"{cookies_txt_path}\" --js-runtime node -f bestvideo+bestaudio \"{Url}\" -o \"{outputPath}\"";

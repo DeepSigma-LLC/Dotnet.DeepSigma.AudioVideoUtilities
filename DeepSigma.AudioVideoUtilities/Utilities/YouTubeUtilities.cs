@@ -5,12 +5,20 @@ using System.Net;
 using YoutubeExplode;
 using YoutubeExplode.Videos;
 using YoutubeExplode.Videos.Streams;
-using static NReco.VideoInfo.MediaInfo;
 
 namespace DeepSigma.AudioVideoUtilities.Utilities;
 
+/// <summary>
+/// Utilities for accessing YouTube videos and their meta data.
+/// </summary>
 public static class YouTubeUtilities
 {
+    /// <inheritdoc cref="YtDlpVideoDownloader.DownloadVideoAsync(string, string, string, CancellationToken)"/>
+    internal static async Task<(bool, Exception?)> YtDlpDownloadYouTubeVideoAsync(string Url, string cookies_txt_path, string outputPath, CancellationToken cancelToken = default)
+    { 
+        return await YtDlpVideoDownloader.DownloadVideoAsync(Url, cookies_txt_path, outputPath, cancelToken);
+    }
+
     /// <summary>
     /// Downloads a YouTube video based on the specified modality (video, audio, or both).
     /// </summary>
@@ -75,6 +83,7 @@ public static class YouTubeUtilities
         await youtube.Videos.Streams.DownloadAsync(video_stream, Path.Combine(save_directory, video_file_name), cancellationToken: cancel_token);
         
         MP4Utilities.CombineAudioAndVideoStreams(Path.Combine(save_directory, audio_file_name), Path.Combine(save_directory, video_file_name), save_directory, file_name);
+        DeleteTemporaryFiles(save_directory, audio_file_name, video_file_name);
         return true;
     }
 
@@ -107,6 +116,7 @@ public static class YouTubeUtilities
     /// Gets YouTube video data from the specified URL.
     /// </summary>
     /// <param name="url"></param>
+    /// <param name="cancellation"></param>
     /// <returns></returns>
     public static async Task<VideoData> GetYouTubeVideoData(string url, CancellationToken cancellation = default)
     {
@@ -152,5 +162,21 @@ public static class YouTubeUtilities
             Keywords = video.Keywords
         };
         return videoData;
+    }
+
+    /// <summary>
+    /// Deletes temporary files from the specified directory.
+    /// </summary>
+    /// <param name="save_directory"></param>
+    /// <param name="file_names"></param>
+    private static void DeleteTemporaryFiles(string save_directory, params string[] file_names)
+    {
+        foreach (string file_name in file_names)
+        {
+            if (File.Exists(Path.Combine(save_directory, file_name)))
+            {
+                File.Delete(Path.Combine(save_directory, file_name));
+            }
+        }
     }
 }

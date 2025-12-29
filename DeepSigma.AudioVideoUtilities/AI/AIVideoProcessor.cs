@@ -6,7 +6,7 @@ namespace DeepSigma.AudioVideoUtilities.AI;
 /// <summary>
 /// AI Audio Video Controller
 /// </summary>
-public class AIAudioVideoController
+public class AIVideoProcessor
 {
     private AIUnstructuredFile DataFile { get; set; } = new AIUnstructuredFile();
     public int ImagePerSecond { get; set; } = 5;
@@ -16,7 +16,7 @@ public class AIAudioVideoController
     Func<string, string> ImageToText { get; init; }
     Func<string, AIUnstructuredPartitionedFile, List<AIUnstructuredTranscriptSegment>> GetAudioTransaction { get; init; }
 
-    public AIAudioVideoController(Func<string, string> image_to_text, Func<string, AIUnstructuredPartitionedFile, List<AIUnstructuredTranscriptSegment>> get_audio_transaction) 
+    public AIVideoProcessor(Func<string, string> image_to_text, Func<string, AIUnstructuredPartitionedFile, List<AIUnstructuredTranscriptSegment>> get_audio_transaction) 
     {
         ImageToText = image_to_text;
         GetAudioTransaction = get_audio_transaction;
