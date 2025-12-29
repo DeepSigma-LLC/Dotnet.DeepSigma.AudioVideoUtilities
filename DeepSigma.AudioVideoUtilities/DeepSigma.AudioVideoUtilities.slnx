@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="../DeepSigma.AudioVideoUtilities.Test/DeepSigma.AudioVideoUtilities.Test.csproj" />
+  <Project Path="DeepSigma.AudioVideoUtilities.csproj" />
+</Solution>
