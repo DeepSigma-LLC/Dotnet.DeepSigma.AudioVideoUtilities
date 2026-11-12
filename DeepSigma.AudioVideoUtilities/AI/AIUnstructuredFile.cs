@@ -3,10 +3,9 @@ using System.Text;
 
 namespace DeepSigma.AudioVideoUtilities.AI;
 
-public class AIUnstructuredFile
+public class AIUnstructuredFile()
 {
     public List<AIUnstructuredPartitionedFile> PartitionedFiles {  get; set; } = [];
-    public AIUnstructuredFile() { }
 
     public TimeSpan? GetLastFileEndTime()
     {
